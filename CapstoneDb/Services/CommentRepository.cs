@@ -34,6 +34,10 @@ namespace CapstoneDb.Services
             return _dbContext.Posts.Where(p => p.PosterId == userId).ToList();
         }
 
+       
+
+
+
         public void InsertComment(Comment comment)
         {
             _dbContext.Comments.Add(comment);

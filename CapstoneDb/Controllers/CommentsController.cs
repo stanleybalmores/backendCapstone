@@ -1,4 +1,4 @@
-﻿/*using CapstoneDb.Models;
+﻿using CapstoneDb.Models;
 using CapstoneDb.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,14 +35,14 @@ namespace CapstoneDb.Controllers
         }
 
         [HttpGet("{postId}")]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsPerPost(int userId, int postId)
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsPerPost(int postId)
         {
-            var post = _postRepository.GetPostByUserById(userId, postId);
+            
 
             try
             {
-                //List<Comment> comments = post.Comments.ToList();
-                return Ok();
+                var post = _postRepository.GetCommentsPerPost(postId);
+                return Ok(post);
             }
             catch (Exception ex)
             {
@@ -51,48 +51,16 @@ namespace CapstoneDb.Controllers
             }
         }
 
-        // GET: api/post/comments/{postId}/{commentId}
-        [HttpGet("{postId}/{postCommentId}")]
-        public async Task<ActionResult<Comment>> GetComment(int userId, int postId, int postCommentId)
-        {
-            try
-            {
-                var comment = _commentRepository.GetCommentByPostById(userId, postId, postCommentId);
-                return Ok(comment);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error retrieving a comment: " + ex.Message);
-                return StatusCode(500, "An error occurred while retrieving a comment.");
-            }
-        }
 
         // POST: api/comments
         [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment([FromBody] Comment comment )
+        public async Task<ActionResult<Comment>> PostComment([FromBody] Comment comment)
         {
             var postId = comment.PostId; //Needs to submit a valid postId inside the new Comment
-            _commentRepository.InsertCommentByPost(postId, comment);
+            _commentRepository.InsertComment(comment);
             return Ok(new { result = "added" });
         }
 
-        // PUT: api/comments/1
-        [HttpPut("{postId}/{postCommentId}")]
-        public async Task<IActionResult> PutComment(int userId, int postId, int postCommentId, Comment updatedComment)
-        {
-            var comment = _commentRepository.GetCommentByPostById(userId, postId, postCommentId);
-
-            if (comment == null) // binago from != to ==
-            {
-                return BadRequest(new { result = "comment_doesnt_exist" });
-            }
-
-            comment.Body = updatedComment.Body;
-
-
-            _commentRepository.UpdateComment(comment);
-            return Ok(new { result = "updated comment" });
-        }
+        
     }
 }
-*/

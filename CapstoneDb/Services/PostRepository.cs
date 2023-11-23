@@ -25,7 +25,7 @@ namespace CapstoneDb.Services
             return _dbContext.Posts.FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Post>? GetPostsByUserId(int userId)
+        public List<Post>? GetPostsByUserId(int userId )
         {
             return _dbContext.Posts.Where(p => p.PosterId == userId).ToList();
         }
@@ -39,6 +39,13 @@ namespace CapstoneDb.Services
         {
             return _dbContext.Comments.FirstOrDefault(x => x.Id == id);
         }
+
+        public List<Comment>? GetCommentsPerPost(int id)
+        {
+            return _dbContext.Comments.Where(x => x.PostId == id).ToList();
+        }
+
+        
         public void InsertPost(Post post)
         {
             _dbContext.Posts.Add(post);
