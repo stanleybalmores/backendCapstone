@@ -13,7 +13,6 @@ namespace CapstoneDb.Models
         public DateTime DatePosted { get; set; } = DateTime.Now;
         public int PosterId { get; set; }
         public User? Poster { get; set; }
-
     }
 
 

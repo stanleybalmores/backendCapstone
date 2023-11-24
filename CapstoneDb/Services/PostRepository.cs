@@ -14,7 +14,7 @@ namespace CapstoneDb.Services
         }
         public List<Post> GetAllPosts()
         {
-            return _dbContext.Posts.ToList();
+            return _dbContext.Posts.Include(u => u.Poster).ToList();
         }
 
         public Post? GetPostById(int id)
