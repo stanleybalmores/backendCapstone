@@ -102,8 +102,11 @@ namespace CapstoneDb.Controllers
                 var loginResponse = new LoginResponse
                 {
                     Email = user.Email,
-                    Token = user.Id
-                    
+                    Token = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UserName = user.FirstName.ToLower() + user.LastName.ToLower()
+
                 };
 
                 return Ok(loginResponse);

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj": {}
+    "C:\\Users\\john.cortez\\Desktop\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj": {}
   },
   "projects": {
-    "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj": {
+    "C:\\Users\\john.cortez\\Desktop\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj",
+        "projectUniqueName": "C:\\Users\\john.cortez\\Desktop\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj",
         "projectName": "CapstoneDb",
-        "projectPath": "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj",
-        "packagesPath": "C:\\Users\\aecbutiong\\.nuget\\packages\\",
-        "outputPath": "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\obj\\",
+        "projectPath": "C:\\Users\\john.cortez\\Desktop\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj",
+        "packagesPath": "C:\\Users\\john.cortez\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\john.cortez\\Desktop\\backendCapstone\\CapstoneDb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\aecbutiong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\john.cortez\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
