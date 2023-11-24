@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CapstoneDb.Controllers
 {
-    [Route("api/Posts/Comments")]
+    [Route("api/comment")]
     [ApiController]
     public class CommentsController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace CapstoneDb.Controllers
 
         // GET: api/Posts/Comments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetAllCommentsinDb()
+        public ActionResult<IEnumerable<Comment>> GetAllCommentsinDb()
         {
             try
             {
@@ -30,15 +30,13 @@ namespace CapstoneDb.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine("Error retrieving comment: " + ex.Message);
-                return StatusCode(500, "An error occurred while retrieving users.");
+                return StatusCode(500, "An error occurred while retrieving comments.");
             }
         }
 
         [HttpGet("{postId}")]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsPerPost(int postId)
+        public ActionResult<IEnumerable<Comment>> GetCommentsPerPost(int postId) // to confirm frontend kung need ba talaga to?
         {
-            
-
             try
             {
                 var post = _postRepository.GetCommentsPerPost(postId);
@@ -54,13 +52,28 @@ namespace CapstoneDb.Controllers
 
         // POST: api/comments
         [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment([FromBody] Comment comment)
+        public ActionResult<Comment> PostComment([FromBody] CommentDTO commentDTO)
         {
-            var postId = comment.PostId; //Needs to submit a valid postId inside the new Comment
-            _commentRepository.InsertComment(comment);
+            int postId = commentDTO.PostId; //Needs to submit a valid postId inside the new Comment
+
+            Post? postExists = _postRepository.GetPostById(postId);
+
+            if (postExists == null) // binago from != to ==
+            {
+                return BadRequest(new { result = "post_doesnt_exist" });
+            }
+
+            var newComment = new Comment()
+            {
+                CommentContent = commentDTO.CommentContent,
+                PostId = commentDTO.PostId,
+                CommenterId = commentDTO.CommenterId
+            };
+
+            _commentRepository.InsertComment(newComment);
             return Ok(new { result = "added" });
         }
 
-        
+
     }
 }

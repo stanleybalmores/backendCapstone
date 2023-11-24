@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapstoneDb.Migrations
 {
     [DbContext(typeof(CapstoneDbContext))]
-    [Migration("20231124033707_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231124034722_initmig")]
+    partial class initmig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

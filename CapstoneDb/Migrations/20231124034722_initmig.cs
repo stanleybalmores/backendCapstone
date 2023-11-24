@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace CapstoneDb.Migrations
 {
     /// <inheritdoc />
-    public partial class initmg : Migration
+    public partial class initmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
