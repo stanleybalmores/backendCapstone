@@ -109,7 +109,7 @@ namespace CapstoneDb.Controllers
                 PostId = newPost.Id,
                 Title = newPost.Title,
                 Content = newPost.Content,
-                DatePosted = DateTime.Now,
+                DatePosted = DateTime.Now
             };
 
             return Ok(postResponse);
@@ -149,13 +149,13 @@ namespace CapstoneDb.Controllers
 
             _postRepository.UpdatePost(editPost);
            
-            return Ok(new { result = "updated_post" });
+            return Ok(new { result = "post_updated" });
         }
 
         
-        // DELETE: api/Posts/5/1
+        // DELETE: api/posts
         [HttpDelete("{postId}")]
-        public IActionResult DeletePost(int postId)
+        public IActionResult DeletePost(int postId, int userId)
         {
 
             var postDelete = _postRepository.GetPostById(postId);
@@ -165,9 +165,14 @@ namespace CapstoneDb.Controllers
                 return BadRequest(new { result = "post_doesnt_exist" });
             }
 
+            if (userId != postDelete.PosterId)
+            {
+                return BadRequest(new { result = "user_doesnt_have_rights_to_delete" });
+            }
+
             _postRepository.DeletePost(postDelete);
 
-            return NoContent();
+            return Ok(new { result = "post_deleted" });
         }
 
 

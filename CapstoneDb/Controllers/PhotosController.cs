@@ -2,10 +2,7 @@
 using CapstoneDb.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CapstoneDb.Data;
-using CapstoneDb.Models;
 
 
 namespace CapstoneDb.Controllers

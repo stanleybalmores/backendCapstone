@@ -106,7 +106,7 @@ namespace CapstoneDb.Controllers
         }
 
         [HttpDelete("{commentId}")]
-        public async Task<IActionResult> DeleteComment(int commentId)
+        public IActionResult DeleteComment(int commentId)
         {
             var commentDelete = _commentRepository.GetCommentById(commentId);
 
