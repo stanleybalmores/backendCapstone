@@ -21,9 +21,10 @@ namespace CapstoneDb.Controllers
         private readonly PostRepository _postRepository;
         private readonly UserRepository _userRepository;
 
-        public PostsController(CapstoneDbContext context, PostRepository postRepository)
+        public PostsController(CapstoneDbContext context, UserRepository userRepository, PostRepository postRepository)
         {
             _context = context;
+            _userRepository = userRepository;
             _postRepository = postRepository;
         }
 
@@ -78,20 +79,40 @@ namespace CapstoneDb.Controllers
         
         // POST: api/Posts/5
 
-        [HttpPost]
-        public IActionResult PostPost([FromBody] PostDTO postDTO)
+        [HttpPost("{userId}")]
+        public async Task<IActionResult> PostPost(int userId, [FromBody] PostDTO postDTO)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid_post");
+            }
+
+            User? poster = await _userRepository.GetUserById(postDTO.PosterId);
+            if (poster == null)
+            {
+                return BadRequest("invalid_user_id");
+            }
+
             var newPost = new Post()
             {
                 Title = postDTO.Title,
                 Content = postDTO.Content,
                 DatePosted = DateTime.Now,
-                PosterId = postDTO.PosterId
+                PosterId = poster.Id
 
             };
             _postRepository.InsertPost(newPost);
 
-            return Ok(new { result = "added" });
+            var postResponse = new PostViewResponse
+            {
+                PostId = newPost.Id,
+                Title = newPost.Title,
+                Content = newPost.Content,
+                DatePosted = DateTime.Now,
+            };
+
+            return Ok(postResponse);
         }
         /*, [FromHeader] Authorization authorization) // needed bearer token for the authorization to be able to get user*/
 

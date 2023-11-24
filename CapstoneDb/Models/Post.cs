@@ -29,8 +29,8 @@ namespace CapstoneDb.Models
     public class PostViewResponse
     {
         public int PostId { get; set; }
-        public string PostTitle { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public string Content { get; set; } = null!;
         public DateTime DatePosted { get; set; }        
 
     }

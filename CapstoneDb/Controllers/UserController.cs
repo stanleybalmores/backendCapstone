@@ -78,7 +78,7 @@ namespace CapstoneDb.Controllers
             _userRepository.InsertUser(newUser);
 
             // Return the newly created user
-            return Ok(new { result = "added" });
+            return Ok(new { result = "user_registered_successfully" });
         }
 
         [HttpPost("login")]

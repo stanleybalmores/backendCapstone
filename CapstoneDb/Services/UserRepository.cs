@@ -20,9 +20,9 @@ namespace CapstoneDb.Services
             return _dbContext.Users.ToList();
         }
 
-        public User? GetUserById(int id)
+        public Task<User?> GetUserById(int id)
         {
-            return _dbContext.Users?.FirstOrDefault(u => u.Id == id);
+            return Task.FromResult(_dbContext.Users?.FirstOrDefault(u => u.Id == id));
         }
 
         public User? GetUserByEmail(string email)
