@@ -18,20 +18,14 @@ namespace CapstoneDb.Services
             return _dbContext.Comments.ToList();
         }
 
-        public List<Comment> GetAllCommentsByPostId(int postId)
+        public List<Comment>? GetCommentsPerPost(int id)
         {
-            return _dbContext.Comments.Where(c => c.PostId == postId).ToList();
+            return _dbContext.Comments.Where(x => x.PostId == id).ToList();
         }
-
 
         public Comment? GetCommentById(int id)
         {
             return _dbContext.Comments.FirstOrDefault(x => x.Id == id);
-        }
-
-        public List<Post>? GetPostsByUserId(int userId)
-        {
-            return _dbContext.Posts.Where(p => p.PosterId == userId).ToList();
         }
 
         public void InsertComment(Comment comment)

@@ -9,13 +9,15 @@ namespace CapstoneDb.Controllers
     [ApiController]
     public class CommentsController : ControllerBase
     {
+        private readonly UserRepository _userRepository;
         private readonly CommentRepository _commentRepository;
         private readonly PostRepository _postRepository;
 
-        public CommentsController(CommentRepository commentRepository, PostRepository postRepository)
+        public CommentsController(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository)
         {
             _commentRepository = commentRepository;
             _postRepository = postRepository;
+            _userRepository = userRepository;
         }
 
         // GET: api/Posts/Comments
@@ -35,11 +37,11 @@ namespace CapstoneDb.Controllers
         }
 
         [HttpGet("{postId}")]
-        public ActionResult<IEnumerable<Comment>> GetCommentsPerPost(int postId) // to confirm frontend kung need ba talaga to?
+        public ActionResult<IEnumerable<Comment>> GetCommentsPerPost(int postId)
         {
             try
             {
-                var post = _postRepository.GetCommentsPerPost(postId);
+                var post = _commentRepository.GetCommentsPerPost(postId);
                 return Ok(post);
             }
             catch (Exception ex)
@@ -74,6 +76,48 @@ namespace CapstoneDb.Controllers
             return Ok(new { result = "added" });
         }
 
+        [HttpPut("{commentId}")]
+        public async Task<IActionResult> PutComment(int commentId, [FromBody] CommentDTO commentDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid_comment");
+            }
 
+            Comment? editComment = _commentRepository.GetCommentById(commentId);
+
+            if (editComment == null)
+            {
+                return BadRequest(new { result = "comment_doesnt_exist" });
+            }
+
+            User? poster = await _userRepository.GetUserById(commentDTO.CommenterId);
+
+            if (poster == null)
+            {
+                return BadRequest("invalid_user_id");
+            }
+
+            editComment.CommentContent = commentDTO.CommentContent;
+
+            _commentRepository.UpdateComment(editComment);
+
+            return Ok(new { result = "updated_comment" });
+        }
+
+        [HttpDelete("{commentId}")]
+        public async Task<IActionResult> DeleteComment(int commentId)
+        {
+            var commentDelete = _commentRepository.GetCommentById(commentId);
+
+            if (commentDelete == null) // binago from != to ==
+            {
+                return BadRequest(new { result = "post_doesnt_exist" });
+            }
+
+            _commentRepository.DeleteComment(commentDelete);
+
+            return Ok(new { result = "deleted_comment" });
+        }
     }
 }

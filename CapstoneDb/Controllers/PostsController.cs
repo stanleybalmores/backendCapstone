@@ -120,14 +120,27 @@ namespace CapstoneDb.Controllers
         // PUT: api/Posts/5/1
 
         [HttpPut("{postId}")]
-        public IActionResult PutPost(int postId, [FromBody] PostDTO updatedPost)
+        public async Task<IActionResult> PutPost(int postId, [FromBody] PostDTO updatedPost)
         {
+            User? poster = await _userRepository.GetUserById(updatedPost.PosterId);
+
+            if (poster == null)
+            {
+                return BadRequest("invalid_user_id");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid_post");
+            }
+
             Post? editPost = _postRepository.GetPostById(postId);
 
-            if (updatedPost == null) // binago from != to ==
+            if (editPost == null) // binago from != to ==
             {
                 return BadRequest(new { result = "post_doesnt_exist" });
             }
+
 
             editPost.Title = updatedPost.Title;
             editPost.Content = updatedPost.Content;
@@ -136,7 +149,7 @@ namespace CapstoneDb.Controllers
 
             _postRepository.UpdatePost(editPost);
            
-            return Ok(new { result = "updated" });
+            return Ok(new { result = "updated_post" });
         }
 
         
@@ -145,8 +158,14 @@ namespace CapstoneDb.Controllers
         public IActionResult DeletePost(int postId)
         {
 
-            var post = _postRepository.GetPostById(postId);
-            _postRepository.DeletePost(post);
+            var postDelete = _postRepository.GetPostById(postId);
+
+            if (postDelete == null) // binago from != to ==
+            {
+                return BadRequest(new { result = "post_doesnt_exist" });
+            }
+
+            _postRepository.DeletePost(postDelete);
 
             return NoContent();
         }
