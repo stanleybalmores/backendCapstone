@@ -12021,19 +12021,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\StaN\\.nuget\\packages\\": {}
+    "C:\\Users\\aecbutiong\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\StaN\\Desktop\\PointwestNETCapstone-Backend\\CapstoneDb\\CapstoneDb\\CapstoneDb.csproj",
+      "projectUniqueName": "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj",
       "projectName": "CapstoneDb",
-      "projectPath": "C:\\Users\\StaN\\Desktop\\PointwestNETCapstone-Backend\\CapstoneDb\\CapstoneDb\\CapstoneDb.csproj",
-      "packagesPath": "C:\\Users\\StaN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\StaN\\Desktop\\PointwestNETCapstone-Backend\\CapstoneDb\\CapstoneDb\\obj\\",
+      "projectPath": "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\CapstoneDb.csproj",
+      "packagesPath": "C:\\Users\\aecbutiong\\.nuget\\packages\\",
+      "outputPath": "E:\\CodingRepos\\ForCapstone\\backendCapstone\\CapstoneDb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\StaN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\aecbutiong\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12123,7 +12123,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

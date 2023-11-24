@@ -29,7 +29,7 @@ namespace CapstoneDb.Controllers
 
         // GET: api/Posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+        public ActionResult<IEnumerable<Post>> GetPosts()
         {
             try
             {
@@ -44,8 +44,8 @@ namespace CapstoneDb.Controllers
         }
 
         // GET: api/Posts/5
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetAllPostsByUserId(int userId)
+        [HttpGet("all/{userId}")]
+        public ActionResult<IEnumerable<Post>> GetAllPostsByUserId(int userId)
         {
             try
             {
@@ -58,13 +58,14 @@ namespace CapstoneDb.Controllers
                 return StatusCode(500, "An error occurred while retrieving posts.");
             }
         }
-        /*// GET: api/Posts/5/1
-        [HttpGet("{userId}/{postId}")]
-        public async Task<ActionResult<Post>> GetPostsByUserById(int userId, int postId)
+
+        // GET: api/Posts/5/1
+        [HttpGet("{postId}")]
+        public IActionResult GetPostById(int postId)
         {
             try
             {
-                var post = _postRepository.GetPostsByUserById(userId, postId);
+                var post = _postRepository.GetPostById(postId);
                 return Ok(post);
             }
             catch (Exception ex)
@@ -74,47 +75,61 @@ namespace CapstoneDb.Controllers
             }
         }
 
+        
         // POST: api/Posts/5
 
         [HttpPost]
-        public async Task<ActionResult<Post>> PostPost([FromBody] Post post*//*, [FromHeader] Authorization authorization*//*) // needed bearer token for the authorization to be able to get user
+        public IActionResult PostPost([FromBody] PostDTO postDTO)
         {
-            var userId = post.UserId; //Must input a valid UserId in the Post object
-            _postRepository.InsertPostByUser(userId, post);
+            var newPost = new Post()
+            {
+                Title = postDTO.Title,
+                Content = postDTO.Content,
+                DatePosted = DateTime.Now,
+                PosterId = postDTO.PosterId
+
+            };
+            _postRepository.InsertPost(newPost);
 
             return Ok(new { result = "added" });
         }
+        /*, [FromHeader] Authorization authorization) // needed bearer token for the authorization to be able to get user*/
 
+        
         // PUT: api/Posts/5/1
 
-        [HttpPut("{userId}/{postId}")]
-        public async Task<IActionResult> PutPost(int userId, int postId, Post updatedPost)
+        [HttpPut("{postId}")]
+        public IActionResult PutPost(int postId, [FromBody] PostDTO updatedPost)
         {
-            var post = _postRepository.GetPostByUserById(userId, postId);
+            Post? editPost = _postRepository.GetPostById(postId);
 
-            if (post == null) // binago from != to ==
+            if (updatedPost == null) // binago from != to ==
             {
                 return BadRequest(new { result = "post_doesnt_exist" });
             }
 
-            post.Title = updatedPost.Title;
-            post.Content = updatedPost.Content;
+            editPost.Title = updatedPost.Title;
+            editPost.Content = updatedPost.Content;
+            editPost.PosterId = updatedPost.PosterId;
 
+
+            _postRepository.UpdatePost(editPost);
            
-            _postRepository.UpdatePost(post);           
             return Ok(new { result = "updated" });
         }
 
+        
         // DELETE: api/Posts/5/1
-        [HttpDelete("{userId}/{postId}")]
-        public async Task<IActionResult> DeletePost(int userId, int postId)
+        [HttpDelete("{postId}")]
+        public IActionResult DeletePost(int postId)
         {
-           var deleteId = _postRepository.GetPostByUserById(userId, postId);
-            _postRepository.DeletePost(deleteId);
+
+            var post = _postRepository.GetPostById(postId);
+            _postRepository.DeletePost(post);
 
             return NoContent();
-        }*/
+        }
 
-        
+
     }
 }

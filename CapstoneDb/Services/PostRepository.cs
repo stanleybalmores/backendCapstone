@@ -17,17 +17,9 @@ namespace CapstoneDb.Services
             return _dbContext.Posts.ToList();
         }
 
-       
-
-
         public Post? GetPostById(int id)
         {
             return _dbContext.Posts.FirstOrDefault(p => p.Id == id);
-        }
-
-        public List<Post>? GetPostsByUserId(int userId )
-        {
-            return _dbContext.Posts.Where(p => p.PosterId == userId).ToList();
         }
 
         public List<Post> GetAllPostsByUserId(int userId)
@@ -35,7 +27,7 @@ namespace CapstoneDb.Services
             return _dbContext.Posts.Where(p => p.PosterId == userId).ToList();
         }
 
-        public Comment? GetCommentById(int id)
+        public Comment? GetCommentById(int id) 
         {
             return _dbContext.Comments.FirstOrDefault(x => x.Id == id);
         }

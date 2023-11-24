@@ -8,7 +8,7 @@ namespace CapstoneDb.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Title { get; set; } = null!;
+        public string? Title { get; set; } = null!;
         public string Content { get; set; } = null!;
         public DateTime DatePosted { get; set; } = DateTime.Now;
         public int PosterId { get; set; }
@@ -23,7 +23,7 @@ namespace CapstoneDb.Models
 
         [Required]
         public string Content { get; set; } = null!;
-        public int PosterId { get; internal set; }
+        public int PosterId { get; set; }
     }
 
     public class PostViewResponse
