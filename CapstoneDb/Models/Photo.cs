@@ -9,7 +9,7 @@
 
     }
 
-    public class PhotoDTO     
+    public class PhotoDTO
     {
             public string Title { get; set; }
             public IFormFile PhotoFile { get; set; }

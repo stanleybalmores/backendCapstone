@@ -102,7 +102,7 @@ namespace CapstoneDb.Controllers
 
             _commentRepository.UpdateComment(editComment);
 
-            return Ok(new { result = "updated_comment" });
+            return Ok(new { result = "comment_updated" });
         }
 
         [HttpDelete("{commentId}")]
@@ -117,7 +117,7 @@ namespace CapstoneDb.Controllers
 
             _commentRepository.DeleteComment(commentDelete);
 
-            return Ok(new { result = "deleted_comment" });
+            return Ok(new { result = "comment_deleted" });
         }
     }
 }

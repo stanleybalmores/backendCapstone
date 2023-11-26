@@ -79,8 +79,8 @@ namespace CapstoneDb.Controllers
         
         // POST: api/Posts/5
 
-        [HttpPost("{userId}")]
-        public async Task<IActionResult> PostPost(int userId, [FromBody] PostDTO postDTO)
+        [HttpPost]
+        public async Task<IActionResult> PostPost([FromBody] PostDTO postDTO)
         {
 
             if (!ModelState.IsValid)
@@ -89,6 +89,7 @@ namespace CapstoneDb.Controllers
             }
 
             User? poster = await _userRepository.GetUserById(postDTO.PosterId);
+
             if (poster == null)
             {
                 return BadRequest("invalid_user_id");
@@ -120,14 +121,8 @@ namespace CapstoneDb.Controllers
         // PUT: api/Posts/5/1
 
         [HttpPut("{postId}")]
-        public async Task<IActionResult> PutPost(int postId, [FromBody] PostDTO updatedPost)
+        public IActionResult PutPost(int postId, [FromBody] PostDTO updatedPost)
         {
-            User? poster = await _userRepository.GetUserById(updatedPost.PosterId);
-
-            if (poster == null)
-            {
-                return BadRequest("invalid_user_id");
-            }
 
             if (!ModelState.IsValid)
             {
@@ -141,11 +136,13 @@ namespace CapstoneDb.Controllers
                 return BadRequest(new { result = "post_doesnt_exist" });
             }
 
+            if (updatedPost.PosterId != editPost.PosterId)
+            {
+                return BadRequest(new { result = "user_doesnt_have_rights_to_edit" });
+            }
 
             editPost.Title = updatedPost.Title;
             editPost.Content = updatedPost.Content;
-            editPost.PosterId = updatedPost.PosterId;
-
 
             _postRepository.UpdatePost(editPost);
            
