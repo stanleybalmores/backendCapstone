@@ -12,9 +12,9 @@ namespace CapstoneDb.Services
             _dbContext = dbContext;
         }
 
-        public Like? GetLikeById(int id)
+        public Like? GetLikeByUserIdAndPostId(int PostId, int UserId)
         {
-            return _dbContext.Likes.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Likes.Where(x => x.PostId == PostId).FirstOrDefault(x => x.UserId == UserId);
         }
 
         public List<Like>? GetLikesPerPost(int postId)

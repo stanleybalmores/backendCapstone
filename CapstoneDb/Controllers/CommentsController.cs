@@ -66,6 +66,7 @@ namespace CapstoneDb.Controllers
             {
                 CommentContent = commentDTO.CommentContent,
                 PostId = commentDTO.PostId,
+                DateCommented = DateTime.Now,
                 CommenterId = commentDTO.CommenterId
             };
 
@@ -73,26 +74,24 @@ namespace CapstoneDb.Controllers
             return Ok(new { result = "added" });
         }
 
-        [HttpPut("{commentId}")]
-        public async Task<IActionResult> PutComment(int commentId, [FromBody] CommentDTO commentDTO)
+        [HttpPut]
+        public IActionResult PutComment([FromBody] CommentDTO commentDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("invalid_comment");
             }
 
-            Comment? editComment = _commentRepository.GetCommentById(commentId);
+            Comment? editComment = _commentRepository.GetCommentById(commentDTO.Id);
 
             if (editComment == null)
             {
                 return BadRequest(new { result = "comment_doesnt_exist" });
             }
 
-            User? poster = await _userRepository.GetUserById(commentDTO.CommenterId);
-
-            if (poster == null)
+            if (commentDTO.CommenterId == editComment.CommenterId)
             {
-                return BadRequest("invalid_user_id");
+                return BadRequest(new { result = "user_doesnt_have_rights_to_edit" });
             }
 
             editComment.CommentContent = commentDTO.CommentContent;
@@ -103,21 +102,19 @@ namespace CapstoneDb.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteComment(CommentDeleteDTO commentDeleteDTO)
+        public IActionResult DeleteComment(CommentDTO commentDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("invalid_comment");
             }
 
-            var commentDelete = _commentRepository.GetCommentById(commentDeleteDTO.Id);
+            var commentDelete = _commentRepository.GetCommentById(commentDTO.Id);
 
             if (commentDelete == null) // binago from != to ==
             {
                 return BadRequest(new { result = "comment_doesnt_exist" });
             }
-
-
 
             _commentRepository.DeleteComment(commentDelete);
 

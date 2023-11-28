@@ -143,7 +143,7 @@ namespace CapstoneDb.Controllers
                 return BadRequest(new { result = "post_doesnt_exist" });
             }
 
-            if (updatedPost.PosterId != editPost.PosterId)
+            if (updatedPost.PosterId == editPost.PosterId)
             {
                 return BadRequest(new { result = "user_doesnt_have_rights_to_edit" });
             }
@@ -178,7 +178,5 @@ namespace CapstoneDb.Controllers
 
             return Ok(new { result = "post_deleted" });
         }
-
-
     }
 }

@@ -68,18 +68,18 @@ namespace CapstoneDb.Controllers
         }
 
         [HttpDelete]
-        public ActionResult<Like> UnlikingPost(LikeDeleteDTO likeDeleteDTO)
+        public ActionResult<Like> UnlikingPost(LikeDTO likeDTO)
         {
-            var unlike = _likeRepository.GetLikeById(likeDeleteDTO.Id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid_unlike");
+            }
+
+            var unlike = _likeRepository.GetLikeByUserIdAndPostId(likeDTO.PostId, likeDTO.UserId);
 
             if (unlike == null)
             {
                 return BadRequest(new { result = "like_doesnt_exist" });
-            }
-
-            if (likeDeleteDTO.UserId != unlike.UserId)
-            {
-                return BadRequest(new { result = "user_doesnt_have_rights_to_unlike" });
             }
 
             _likeRepository.UnlikePost(unlike);

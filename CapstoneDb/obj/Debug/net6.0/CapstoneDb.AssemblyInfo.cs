@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CapstoneDb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcd0a639859a6b78723ee26fc30be4d0ae56c4d1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d045c76cb3bec63b85774b64fe5deddc601fe9f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CapstoneDb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CapstoneDb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
