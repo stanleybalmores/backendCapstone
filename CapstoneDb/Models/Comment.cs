@@ -24,4 +24,14 @@ namespace CapstoneDb.Models
 
         public int CommenterId { get; set; }
     }
+
+    public class CommentDeleteDTO
+    {
+        public int Id { get;}
+        public string CommentContent { get; set; } = null!;
+
+        public int PostId { get; set; }
+
+        public int CommenterId { get; set; }
+    }
 }

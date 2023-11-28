@@ -18,9 +18,9 @@ namespace CapstoneDb.Services
             return _dbContext.Comments.ToList();
         }
 
-        public List<Comment>? GetCommentsPerPost(int id)
+        public List<Comment>? GetCommentsPerPost(int postId)
         {
-            return _dbContext.Comments.Where(x => x.PostId == id).ToList();
+            return _dbContext.Comments.Where(x => x.PostId == postId).ToList();
         }
 
         public Comment? GetCommentById(int id)

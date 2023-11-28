@@ -76,7 +76,7 @@ namespace CapstoneDb.Controllers
             }
         }
 
-        
+
         // POST: api/Posts/5
 
         [HttpPost]
@@ -105,19 +105,26 @@ namespace CapstoneDb.Controllers
             };
             _postRepository.InsertPost(newPost);
 
-            var postResponse = new PostViewResponse
+            // Retrieve all posts from the repository
+            List<Post> allPosts = _postRepository.GetAllPosts();
+
+            // Sort the posts based on DatePosted in descending order
+            var sortedPosts = allPosts.OrderByDescending(p => p.DatePosted).ToList();
+
+            // Create a list of PostViewResponse objects
+            var postResponse = sortedPosts.Select(post => new PostViewResponse
             {
-                PostId = newPost.Id,
-                Title = newPost.Title,
-                Content = newPost.Content,
+                PostId = post.Id,
+                Title = post.Title,
+                Content = post.Content,
                 DatePosted = DateTime.Now
-            };
+            }).ToList();
 
             return Ok(postResponse);
         }
         /*, [FromHeader] Authorization authorization) // needed bearer token for the authorization to be able to get user*/
 
-        
+
         // PUT: api/Posts/5/1
 
         [HttpPut("{postId}")]

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapstoneDb.Migrations
 {
     [DbContext(typeof(CapstoneDbContext))]
-    [Migration("20231124034722_initmig")]
-    partial class initmig
+    [Migration("20231128030357_secondmig")]
+    partial class secondmig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,27 @@ namespace CapstoneDb.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("CapstoneDb.Models.Like", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("CapstoneDb.Models.Photo", b =>
@@ -149,6 +170,25 @@ namespace CapstoneDb.Migrations
                     b.Navigation("Commenter");
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("CapstoneDb.Models.Like", b =>
+                {
+                    b.HasOne("CapstoneDb.Models.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CapstoneDb.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CapstoneDb.Models.Post", b =>

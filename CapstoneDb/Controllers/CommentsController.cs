@@ -47,7 +47,7 @@ namespace CapstoneDb.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine("Error retrieving comment: " + ex.Message);
-                return StatusCode(500, "An error occurred while retrieving users.");
+                return StatusCode(500, "An error occurred while retrieving comments from the specific post.");
             }
         }
 
@@ -56,11 +56,8 @@ namespace CapstoneDb.Controllers
         [HttpPost]
         public ActionResult<Comment> PostComment([FromBody] CommentDTO commentDTO)
         {
-            int postId = commentDTO.PostId; //Needs to submit a valid postId inside the new Comment
 
-            Post? postExists = _postRepository.GetPostById(postId);
-
-            if (postExists == null) // binago from != to ==
+            if (_postRepository.GetPostById(commentDTO.PostId) == null)
             {
                 return BadRequest(new { result = "post_doesnt_exist" });
             }
@@ -105,15 +102,22 @@ namespace CapstoneDb.Controllers
             return Ok(new { result = "comment_updated" });
         }
 
-        [HttpDelete("{commentId}")]
-        public IActionResult DeleteComment(int commentId)
+        [HttpDelete]
+        public IActionResult DeleteComment(CommentDeleteDTO commentDeleteDTO)
         {
-            var commentDelete = _commentRepository.GetCommentById(commentId);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid_comment");
+            }
+
+            var commentDelete = _commentRepository.GetCommentById(commentDeleteDTO.Id);
 
             if (commentDelete == null) // binago from != to ==
             {
-                return BadRequest(new { result = "post_doesnt_exist" });
+                return BadRequest(new { result = "comment_doesnt_exist" });
             }
+
+
 
             _commentRepository.DeleteComment(commentDelete);
 

@@ -36,6 +36,7 @@ namespace CapstoneDb
             builder.Services.AddScoped<UserRepository>();
             builder.Services.AddScoped<PostRepository>();
             builder.Services.AddScoped<CommentRepository>();
+            builder.Services.AddScoped<LikeRepository>();
 
             var app = builder.Build();
 
